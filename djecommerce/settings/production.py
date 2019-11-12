@@ -1,4 +1,5 @@
 from .base import *
+import dj_database_url
 
 DEBUG = True
 ALLOWED_HOSTS = ['secure-basin-29081.herokuapp.com']
@@ -19,6 +20,8 @@ DATABASES = {
         'PORT': '5433',
     }
 }
+
+DATABASES = {default': dj_database_url.config()}
 
 STRIPE_PUBLIC_KEY = 'pk_test_cR7bvsieZTgD2oDp5pFIe4sg00XYyANA59'
 STRIPE_SECRET_KEY = 'sk_test_NMSZF5w3P2ihIBJAosiViqE200RuREs2WB'
