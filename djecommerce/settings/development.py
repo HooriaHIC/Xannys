@@ -4,7 +4,7 @@ import psycopg2
 
 
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.herokuapp.com', '.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS += [
     'debug_toolbar'
