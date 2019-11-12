@@ -1,0 +1,29 @@
+{% block extra_head %}
+<style>
+  @media(max-width: 400px) {
+    .tls {
+      margin-left: -10px;
+      margin-right: 0;
+      font-size: 0.8em;
+    }
+
+    .copy-txt {
+      margin-right: -30px;
+      font-size: 0.9em;
+    }
+  }
+</style>
+{% endblock %}
+<footer class="page-footer font-small fixed-bottom mt-4" style="background: #1B213F;">
+  <!--Copyright-->
+  <div class="footer-copyright py-3">
+
+    <a class=" tls ml-3 mr-3" href="{% url 'core:about' %}"> About </a>
+    <a class="tls ml-3 mr-3" href="{% url 'core:contact' %}"> Contact </a>
+    <p class="copy-txt float-right mr-3" style="height: 0px;">Copyright © 2019
+      <a href="/" target="_blank"> XANNYS </a></p>
+  </div>
+  </div>
+  <!--/.Copyright-->
+
+</footer>

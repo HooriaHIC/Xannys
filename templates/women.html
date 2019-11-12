@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+    <div class="container">
+        <h1 class="mt-4 mb-4 text-center" style="color: #ED8095; font-weight: 700; letter-spacing: 3px; font-family: 'Liu Jian Mao Cao', cursive;
+font-size: 6em;">Women</h1>
+
+        <hr style="border-top: 1px solid #FFFFFF;">
+        <div class="row mt-5 mb-5">
+            {% for item in items %}
+            <div class="col-lg-3 col-md-6 mb-4">
+
+                <div class="card p-2" style="background:#161a32;">
+                    <div class="view overlay">
+                        <img src="{{ item.image.url }}" class="card-img-top">
+                        <a href="{{ item.get_absolute_url }}">
+                            <div class="mask rgba-white-slight" style="margin-top: -4px;">
+                                <span>
+                                    {% if item.get_label_display == "New" %}
+                                    <span class="badge bg-secondary">{{item.get_label_display}}</span>
+                                    {% elif item.get_label_display == "Hot Seller" %}
+                                    <span class="badge" style="background: #EDADCE;">{{item.get_label_display}}</span>
+                                    {% elif item.get_label_display == "Sale" %}
+                                    <span class="badge" style="background: #ED8095;">{{item.get_label_display}}</span>
+                                    {% else %}
+                                    <span class="badge bg-Secondary">New</span>
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="card-body text-left">
+                        <a href="">
+                            <h6 style="color: #FFFFFF;">{{ item.get_category_display }}</h6>
+                        </a>
+                        <h5>
+                            <strong>
+                                <a href="{{ item.get_absolute_url }}" style="color: #FFFFFF;">{{ item.title }}
+                                </a>
+                            </strong>
+                        </h5>
+                        {% if item.fav %}
+                        <a href="{% url 'core:fav_update' slug=item.slug %}">
+                            <i class="fas fa-heart float-right"
+                                style="margin-top: -20px;font-size: 2em;color: #F3B2D3; transition: all 2s; -webkit-text-stroke: 4px #ED8095; "></i>
+                        </a>
+
+                        {% else %}
+                        <a href="{% url 'core:fav_update' slug=item.slug %}">
+                            <i class="far fa-heart float-right"
+                                style="margin-top: -20px;font-size: 2em;color: #ED8095; "></i>
+                        </a>
+
+                        {% endif %}
+                        <h4 class="font-weight-bold" style="color: #ED87BB;">
+                            <strong>$
+                                {% if item.discount_price %}
+                                {{ item.discount_price }}
+                                {% else %}
+                                {{ item.price }}
+                                {% endif %}
+                            </strong>
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</main>
+
+{% endblock content %}

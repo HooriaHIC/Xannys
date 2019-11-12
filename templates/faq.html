@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block extra_head %}
+<style>
+    .icon-bar {
+        position: fixed;
+        top: 40%;
+        z-index: 1000 !important;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    .icon-bar a {
+        display: block;
+        text-align: center;
+        padding: 16px;
+        transition: all 0.3s ease;
+        color: white;
+        background: transparent;
+        font-size: 20px;
+    }
+
+    .icon-bar a:hover {
+        background-color: transparent;
+        color: #ED8095;
+    }
+
+    .content {
+        margin-left: 75px;
+        font-size: 30px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<main class="fadeIn">
+    <div class="icon-bar">
+        <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="google"><i class="fab fa-instagram"></i></a>
+    </div>
+
+</main>
+
+{% endblock content %}

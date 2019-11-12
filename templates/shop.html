@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block extra_head %}
+<style>
+
+</style>
+{% endblock %}
+{% block content %}
+<main>
+    <div class="container mt-2">
+        <h1 class="mb-5 text-center" style="color: #ED8095; font-weight: 700; letter-spacing: 3px; font-family: 'Liu Jian Mao Cao', cursive;
+        font-size: 6em;">Shop</h1>
+        <hr style="border-top: 1px solid #FFFFFF;">
+        <section class="text-center mb-5 ">
+
+            <div class="row">
+
+                {% for item in items %}
+                <div class="col-lg-3 col-md-6 mb-5">
+
+                    <div class="card p-2" style="background:#161a32;">
+
+                        <div class="view overlay">
+
+                            <img src="{{ item.image.url }}" class="card-img-top">
+                            <a href="{{ item.get_absolute_url }}">
+                                <div class="mask rgba-white-slight">
+                                    {% if item.get_label_display == "New" %}
+                                    <span class="badge bg-secondary float-left">{{item.get_label_display}}</span>
+                                    {% elif item.get_label_display == "Hot Seller" %}
+                                    <span class="badge float-left"
+                                        style="background: #EDADCE;">{{item.get_label_display}}</span>
+                                    {% elif item.get_label_display == "Sale" %}
+                                    <span class="badge float-left"
+                                        style="background: #ED8095;">{{item.get_label_display}}</span>
+                                    {% else %}
+                                    <span class="badge float-left bg-Secondary">New</span>
+                                    {% endif %}
+
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="card-body text-left">
+                            <a href="">
+                                <h6 style="color: #FFFFFF;">{{ item.get_category_display }}</h6>
+                            </a>
+                            <h5>
+                                <strong>
+                                    <a href="{{ item.get_absolute_url }}" style="color: #FFFFFF;">{{ item.title }}
+
+                                    </a>
+                                </strong>
+                            </h5>
+
+                            {% if item.fav %}
+                            <a href="{% url 'core:fav_update' slug=item.slug %}">
+                                <i class="fas fa-heart float-right"
+                                    style="margin-top: -20px;font-size: 2em;color: #F3B2D3; transition: all 2s; -webkit-text-stroke: 4px #ED8095; "></i>
+                            </a>
+
+                            {% else %}
+                            <a href="{% url 'core:fav_update' slug=item.slug %}">
+                                <i class="far fa-heart float-right"
+                                    style="margin-top: -20px;font-size: 2em;color: #ED8095; "></i>
+                            </a>
+
+                            {% endif %}
+                            <h4 class="font-weight-bold" style="color: #ED87BB;">
+                                <strong>$
+                                    {% if item.discount_price %}
+                                    {{ item.discount_price }}
+                                    {% else %}
+                                    {{ item.price }}
+                                    {% endif %}
+                                </strong>
+                            </h4>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+
+        </section>
+
+
+        {% if is_paginated %}
+        <nav class="d-flex justify-content-center wow fadeIn">
+            <ul class="pagination pg-blue">
+
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                {% endif %}
+
+                <li class="page-item active">
+                    <a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+    </div>
+</main>
+
+{% endblock content %}

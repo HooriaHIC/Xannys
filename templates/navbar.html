@@ -1,0 +1,96 @@
+{% load cart_template_tags %}
+{% block extra_head %}
+<style>
+  @media(max-width: 600px) {
+    .nav-item {
+      background: transparent;
+      font-size: 0.9em;
+    }
+
+    .main-ul {
+      font-size: 1em;
+    }
+
+    .fa-heart {
+      font-size: 1em;
+    }
+  }
+
+  @media(max-width: 350px) {
+    .nav-item {
+      background: transparent;
+      font-size: 0.8em;
+    }
+
+    .main-ul {
+      font-size: 1em;
+    }
+  }
+</style>
+{% endblock %}
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar"
+  style="background: #1B213F;box-shadow: none;">
+  <div class="container">
+    <!-- Left -->
+    <ul class="navbar-nav nav-flex-icons">
+      <li class="nav-item">
+        <a class="nav-link waves-effect" href="/">
+          <span class="clearfix d-sm-inline-block"><b>Home</b></span>
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-effect" href="{% url 'core:shop' %}">
+          <span class="clearfix d-sm-inline-block"><b>Shop</b></span>
+        </a>
+      </li>
+    </ul>
+    <ul class="navbar-nav nav-flex-icons">
+      <li class="nav-item">
+        <a class="nav-link waves-effect" href="/">
+          <span class="clearfix d-sm-inline-block">
+            <h1 class="main-ul"
+              style=" font-weight: 700; letter-spacing: 4px; font-family: 'Liu Jian Mao Cao', cursive;">
+              XANNYS</h1>
+          </span>
+        </a>
+      </li>
+    </ul>
+    <!-- Right -->
+    <ul class="navbar-nav nav-flex-icons">
+      {% if request.user.is_authenticated %}
+      <li class="nav-item">
+        <a href="{% url 'core:fav' %}" class="nav-link waves-effect">
+          <i class="far fa-heart" style="font-size: 1.3em; margin-top: 2px;"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a style="margin-top: -2px;" href="{% url 'core:order-summary' %}" class="nav-link waves-effect">
+          <span class="badge"
+            style="background: #ED8095; border-radius: 50%; padding: 8px; padding-right: 11px;padding-left: 11px; margin-top: -15px;">
+            {{ request.user|cart_item_count }}
+          </span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-effect" href="{% url 'account_logout' %}">
+          <span class="clearfix  d-sm-inline-block"> <b>Logout</b> </span>
+        </a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link waves-effect" href="{% url 'account_login' %}">
+          <span class="clearfix d-sm-inline-block"> <b>Login</b> </span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-effect" href="{% url 'account_signup' %}">
+          <span class="clearfix d-sm-inline-block"> <b>Signup</b> </span>
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+
+  </div>
+</nav>

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block extra_head %}
+<style>
+    .icon-bar {
+        position: fixed;
+        top: 40%;
+        z-index: 1000 !important;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    .icon-bar a {
+        display: block;
+        text-align: center;
+        padding: 16px;
+        transition: all 0.3s ease;
+        color: white;
+        background: transparent;
+        font-size: 20px;
+    }
+
+    .icon-bar a:hover {
+        background-color: transparent;
+        color: #ED8095;
+    }
+
+    .content {
+        margin-left: 75px;
+        font-size: 30px;
+    }
+
+    .about-h1 {
+        text-transform: uppercase;
+        letter-spacing: 6px;
+        font-size: 10vh;
+        font-weight: 900;
+        text-decoration: none;
+        color: white;
+        background-size: 120% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -moz-background-clip: text;
+        -moz-text-fill-color: transparent;
+        -ms-background-clip: text;
+        -ms-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        background-image: linear-gradient(45deg,
+                #ED8095,
+                #AD5E6D,
+                #F3B2D3,
+                #FFFFFF);
+    }
+
+    input {
+        background: transparent;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<main class="fadeIn mb-5">
+    <div class="icon-bar">
+        <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="google"><i class="fab fa-instagram"></i></a>
+    </div>
+    <div class="container p-5 mb-5">
+
+
+        <h1 class="about-h1">CONTACT US</h1>
+        <form role="form" class="mb-5" action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn float-right mb-5" style="background: #ED8095;">Submit</button>
+        </form>
+
+
+    </div>
+</main>
+
+{% endblock content %}

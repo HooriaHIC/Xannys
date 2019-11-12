@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block extra_head %}
+<style>
+  .little-images {
+    margin-top: 10px;
+    height: 100px;
+  }
+</style>
+{% endblock %}
+{% block content %}
+
+<main class="mt-3 pt-4">
+  <div class="container mt-1 mb-5">
+
+    <!--Grid row-->
+    <div class="row">
+
+      <!--Grid column-->
+      <div class="col-md-5 mb-4">
+
+
+        {% if object.img1 %}
+        {% include "carousel.html" %}
+        {% else %}
+        <img src="{{ object.image.url }}" class="img-fluid mx-auto d-block" alt="" id="main_img"
+          style="max-height: 70vh;">
+        {% endif %}
+
+      </div>
+
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-md-7 mb-4">
+
+        <!--Content-->
+        <div class="p-4">
+
+          <div class="mb-3">
+            <h1>{{ object.title }}</h1>
+            <span class="badge purple mr-1">{{ object.cat.name }}</span>
+            {% if object.get_label_display == "New" %}
+            <span class="badge bg-secondary">{{object.get_label_display}}</span>
+            {% elif object.get_label_display == "Hot Seller" %}
+            <span class="badge" style="background: #EDADCE;">{{object.get_label_display}}</span>
+            {% elif object.get_label_display == "Sale" %}
+            <span class="badge" style="background: #ED8095;">{{object.get_label_display}}</span>
+            {% else %}
+            <span class="badge bg-Secondary">New</span>
+            {% endif %}
+            {% if item.fav %}
+            <a href="{% url 'core:fav_update' slug=item.slug %}">
+              <i class="fas fa-heart float-right"
+                style="margin-right: 20px;font-size: 2em;color: #F3B2D3; transition: all 2s; -webkit-text-stroke: 4px #ED8095; "></i>
+            </a>
+
+            {% else %}
+            <a href="{% url 'core:fav_update' slug=item.slug %}">
+              <i class="far fa-heart float-right"
+                style="margin-top: -20px; margin-right: 30px;font-size: 2em;color: #ED8095; "></i>
+            </a>
+
+            {% endif %}
+          </div>
+
+          <p class="lead" style="color: #ED87BB;">
+            {% if object.discount_price %}
+            <span class="mr-1">
+              <del>${{ object.price }}</del>
+            </span>
+            <span>${{ object.discount_price }}</span>
+            {% else %}
+            <span>${{ object.price }}</span>
+            {% endif %}
+          </p>
+
+          <p>type: {{ object.get_cloth_type_display }}</p>
+          <p>Fabric: {{ object.fabric }}</p>
+          <p>Currently: {% if item.get_stock_display == "In Stock" %}
+            <span class="badge" style="background: #50c878;">{{item.get_stock_display}}</span>
+            {% elif item.get_stock_display == "Limited Edition" %}
+            <span class="badge" style="background: #f8de7e;">{{item.get_stock_display}}</span>
+            {% elif item.get_stock_display == "Out of Stock" %}
+            <span class="badge" style="background: #ea3c53;">{{item.get_stock_display}}</span>
+            {% else %}
+            <span class="badge" style="background: #50c878;">In Stock</span>
+            {% endif %}</p>
+          <p class="lead font-weight-bold">Description</p>
+
+          <p>{{ object.description }}</p>
+
+          {% comment %} <form class="d-flex justify-content-left">
+            <!-- Default input -->
+            <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">
+            <button class="btn btn-primary btn-md my-0 p" type="submit">
+              Add to cart
+              <i class="fas fa-shopping-cart ml-1"></i>
+            </button>
+
+          </form> {% endcomment %}
+          <a href="{{ object.get_add_to_cart_url }}" style="background: #ED8095;" class="btn btn-md my-0 p pl-4 pr-4">
+            Add to cart
+            <i class="fas fa-shopping-cart ml-1"></i>
+          </a>
+          <a href="{{ object.get_remove_from_cart_url }}" style="background: #ea3c53;"
+            class="btn btn-md my-0 p pl-3 pr-3">
+            Remove from cart
+          </a>
+
+        </div>
+        <!--Content-->
+
+      </div>
+      <!--Grid column-->
+
+    </div>
+    <!--Grid row-->
+
+
+    <!--Grid row-->
+  </div>
+</main>
+
+{% endblock content %}

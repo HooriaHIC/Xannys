@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block extra_head %}
+<style>
+    .icon-bar {
+        position: fixed;
+        top: 40%;
+        z-index: 1000 !important;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    .icon-bar a {
+        display: block;
+        text-align: center;
+        padding: 16px;
+        transition: all 0.3s ease;
+        color: white;
+        background: transparent;
+        font-size: 20px;
+    }
+
+    .icon-bar a:hover {
+        background-color: transparent;
+        color: #ED8095;
+    }
+
+    .content {
+        margin-left: 75px;
+        font-size: 30px;
+    }
+
+    .about-h1 {
+        text-transform: uppercase;
+        letter-spacing: 6px;
+        font-size: 15vh;
+        text-align: center;
+        font-weight: 900;
+        text-decoration: none;
+        color: white;
+        background-size: 120% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -moz-background-clip: text;
+        -moz-text-fill-color: transparent;
+        -ms-background-clip: text;
+        -ms-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        background-image: linear-gradient(45deg, rgba(237, 128, 149, 0.5), rgba(173, 94, 109, 0.4), rgba(243, 178, 211, 0.3), rgba(255, 255, 255, 0.2)), url('https://media2.giphy.com/media/3o6Ztb45EYezY9x9gQ/source.gif');
+    }
+
+    .p {
+        font-size: 1.4em;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<main class="fadeIn mb-5">
+    <div class="icon-bar">
+        <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="google"><i class="fab fa-instagram"></i></a>
+    </div>
+    <div class="container p-5 mb-5">
+        <h1 class="about-h1 mt-5">
+            Thank You!
+        </h1>
+        <p class="p mt-4">We will contact you as soon as possible :)</p>
+
+    </div>
+</main>
+
+{% endblock content %}
