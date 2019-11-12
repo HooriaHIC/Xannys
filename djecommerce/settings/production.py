@@ -2,7 +2,7 @@ from .base import *
 import dj_database_url
 
 DEBUG = True
-ALLOWED_HOSTS = ['https://xannys.herokuapp.com/']
+ALLOWED_HOSTS = ['xannys.herokuapp.com']
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
