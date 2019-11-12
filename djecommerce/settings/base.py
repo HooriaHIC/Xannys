@@ -7,9 +7,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(
 
 SECRET_KEY = 'kobl@t=yw9d*0y%jt2gjnq78=u!z_rrxb&w8e47l!(jz@m79zy'
 
-
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
