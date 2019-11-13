@@ -18,7 +18,7 @@
     <div class="row">
 
       <!--Grid column-->
-      <div class="col-md-5 mb-2 " style="max-height: 100vh;">
+      <div class="col-md-5 mb-5" style="max-height: 100vh;">
 
 
         {% if object.img1 %}
@@ -52,13 +52,13 @@
             {% if item.fav %}
             <a href="{% url 'core:fav_update' slug=item.slug %}">
               <i class="fas fa-heart float-right"
-                style="margin-right: 20px;font-size: 2em;color: #F3B2D3; transition: all 2s; -webkit-text-stroke: 4px #ED8095; "></i>
+                style="margin-right: 50px;font-size: 3em;color: #F3B2D3; transition: all 2s; -webkit-text-stroke: 4px #ED8095; "></i>
             </a>
 
             {% else %}
             <a href="{% url 'core:fav_update' slug=item.slug %}">
               <i class="far fa-heart float-right"
-                style="margin-top: -20px; margin-right: 30px;font-size: 2em;color: #ED8095; "></i>
+                style="margin-top: -20px; margin-right: 50px;font-size: 3em;color: #ED8095; "></i>
             </a>
 
             {% endif %}
