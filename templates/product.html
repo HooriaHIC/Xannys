@@ -18,14 +18,13 @@
     <div class="row">
 
       <!--Grid column-->
-      <div class="col-md-5 mb-2">
+      <div class="col-md-5 mb-2 " style="max-height: 70vh;">
 
 
         {% if object.img1 %}
         {% include "carousel.html" %}
         {% else %}
-        <img src="{{ object.image.url }}" class="img-fluid mx-auto d-block" alt="" id="main_img"
-          style="max-height: 100vh;">
+        <img src="{{ object.image.url }}" class="img-fluid mx-auto d-block" alt="" id="main_img">
         {% endif %}
 
       </div>
