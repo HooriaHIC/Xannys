@@ -55,13 +55,11 @@
               <i class="fas fa-heart float-right"
                 style="margin-right: 30px;font-size: 2em;color: #F3B2D3; transition: all 2s; -webkit-text-stroke: 4px #ED8095; "></i>
             </a>
-
             {% else %}
             <a href="{% url 'core:fav_update' slug=item.slug %}">
               <i class="far fa-heart float-right"
                 style="margin-top: -15px; margin-right: 30px;font-size: 2em;color: #ED8095; "></i>
             </a>
-
             {% endif %}
           </div>
 
