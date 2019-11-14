@@ -23,7 +23,7 @@ class UserProfile(models.Model):
 class Cats(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(default=name)
-    image = models.ImageField()
+    image = CloudinaryField('image')
 
     def __str__(self):
         return self.name
@@ -45,7 +45,7 @@ class Item(models.Model):
     description = models.TextField(
         default="This product don't have any description")
     image = CloudinaryField('image')
-    img1 = CloudinaryField('image')
+    img1 = CloudinaryField('image', blank=True, null=True)
     fav = models.BooleanField(default=False)
     cat = models.ForeignKey(
         Cats, on_delete=models.CASCADE)
