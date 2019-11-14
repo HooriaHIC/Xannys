@@ -1,10 +1,17 @@
 import os
 from decouple import config
+import cloudinary
 
 BASE_DIR = os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))))
 
 SECRET_KEY = 'kobl@t=yw9d*0y%jt2gjnq78=u!z_rrxb&w8e47l!(jz@m79zy'
+
+cloudinary.config(
+    cloud_name="dgiguwrz1",
+    api_key="257659494775271",
+    api_secret="sAqckj6YhB9BVhdqtyr9iGx6hIA"
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -13,6 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -23,11 +31,6 @@ INSTALLED_APPS = [
     'core'
 ]
 
-cloudinary.config(
-    cloud_name="dgiguwrz1",
-    api_key="257659494775271",
-    api_secret="sAqckj6YhB9BVhdqtyr9iGx6hIA"
-)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
