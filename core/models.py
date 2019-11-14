@@ -7,6 +7,7 @@ from django_countries.fields import CountryField
 from .choices import *
 from django import forms
 from django.template.defaultfilters import slugify
+from cloudinary.models import CloudinaryField
 
 
 class UserProfile(models.Model):
@@ -43,8 +44,8 @@ class Item(models.Model):
     slug = models.SlugField(editable=False)
     description = models.TextField(
         default="This product don't have any description")
-    image = models.ImageField()
-    img1 = models.ImageField(blank=True, null=True)
+    image = CloudinaryField('image')
+    img1 = CloudinaryField('image', blank=True, null=True)
     fav = models.BooleanField(default=False)
     cat = models.ForeignKey(
         Cats, on_delete=models.CASCADE)

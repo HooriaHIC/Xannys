@@ -1,5 +1,6 @@
 import os
 from decouple import config
+import cloudinary
 
 BASE_DIR = os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))))
@@ -20,9 +21,15 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
     'django_countries',
-
+    'cloudinary',
     'core'
 ]
+
+cloudinary.config(
+    cloud_name="dgiguwrz1",
+    api_key="257659494775271",
+    api_secret="sAqckj6YhB9BVhdqtyr9iGx6hIA"
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
