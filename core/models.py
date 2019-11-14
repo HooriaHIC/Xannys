@@ -45,7 +45,7 @@ class Item(models.Model):
     description = models.TextField(
         default="This product don't have any description")
     image = CloudinaryField('image')
-    img1 = CloudinaryField('image', blank=True, null=True)
+    img1 = CloudinaryField('image')
     fav = models.BooleanField(default=False)
     cat = models.ForeignKey(
         Cats, on_delete=models.CASCADE)
