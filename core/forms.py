@@ -2,7 +2,7 @@ from django import forms
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
 from django.forms import ModelForm, Textarea
-from .models import Item
+from .models import *
 
 PAYMENT_CHOICES = (
     ('S', 'Stripe'),

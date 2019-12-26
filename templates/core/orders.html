@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container p-5">
+    <div class="row mb-5">
+        <div class="col-md-8">
+            <h2>Orders ({{order.count}})</h2>
+        </div>
+        <div class="col-md-4">
+            <a class="btn float-right update-btn text-white btn-md mt-1 mb-1" href="{% url 'core:order-create' %}"
+                style="border:2px solid #ED8095; color:#ED8095">Add new order</a>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        {% for post in order %}
+
+        <div class="col-md-12 m-2" style="background-color: rgba(0,0,0,0.3);">
+            <div class="row p-2">
+                <div class="col-md-6">
+
+                    <h2 class="mt-5"><a class="article-title"
+                            href="{% url 'core:order-detail' post.id %}">{{ post.user }}</a>
+                    </h2>
+
+                </div>
+                <div class="col-md-6 mt-5">
+                    <div style="float: right">
+                        <a class="btn update-btn text-white btn-md mt-1 mb-1"
+                            href="{% url 'core:order-update' post.id %}"
+                            style="border:2px solid #ED8095; color:#ED8095">Update</a>
+                        <Br>
+                        <a class="btn delete-btn text-white btn-md mt-1 mb-1"
+                            href="{% url 'core:order-delete' post.id %}"
+                            style="border:2px solid #ED8095; color:#ED8095">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

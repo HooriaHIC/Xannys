@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container p-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Order</h2>
+            <form class="mt-5">
+                <div class="form-row">
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <label>User</label>
+                            <input type="text" id="inputSMEx" disabled value="{{object.user}}"
+                                class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <label>Ref Code</label>
+                            <input type="text" id="inputSMEx" disabled value="{{object.ref_code}}"
+                                class="form-control form-control-sm">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row mt-5">
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <label>Start Date</label>
+                            <input type="text" id="inputSMEx" disabled value="{{object.start_date}}"
+                                class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <label>Ordered date</label>
+                            <input type="text" id="inputSMEx" disabled value="{{object.ordered_date}}"
+                                class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <label>Ordered</label>
+                            <input type="text" id="inputSMEx" disabled value="{{object.ordered}}"
+                                class="form-control form-control-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row mt-5">
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <label>Shipping Address</label>
+                            <input type="text" id="inputSMEx" disabled value="{{object.shipping_address}}"
+                                class="form-control form-control-sm">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row mt-5">
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <label>Billing Address</label>
+                            <input type="text" id="inputSMEx" disabled value="{{object.billing_address}}"
+                                class="form-control form-control-sm">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row mt-5">
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <label>Payment Code</label>
+                            <input type="text" id="inputSMEx" disabled value="{{object.payment}}"
+                                class="form-control form-control-sm">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row mt-5">
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <label>Coupon</label>
+                            <input type="text" id="inputSMEx" disabled value="{{object.coupon}}"
+                                class="form-control form-control-sm">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row mt-2 mb-5">
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <label>Being Dilivered</label>
+                            <input type="text" value="{{object.being_delivered}}" class="form-control form-control-sm">
+
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <label>Received</label>
+                            <input type="text" value="{{object.received}}" class="form-control form-control-sm">
+
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="md-form mt-0">
+
+                            <label>Refund Requested</label>
+                            <input type="text" value="{{object.refund_requested}}" class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <label>Refund granted</label>
+                            <input type="text" value="{{object.refund_granted}}" class="form-control form-control-sm">
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-12 mb-4 bg-white pb-2">
+                <h4 class="d-flex justi fy-content-between align-items-center mb-3">
+                    <span class="text-muted mt-3 mb-3 text-center">Order Info</span>
+                </h4>
+                <ul class="list-group mb-3 z-depth-1">
+                    {% for order_item in order.items.all %}
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0" style="color:#ED8095">{{ order_item.quantity }} x
+                                {{ order_item.item.title}}</h6>
+                            <small class="text-muted">{{ order_item.item.description}}</small>
+                        </div>
+                        <span class="text-muted">${{ order_item.get_final_price }}</span>
+                    </li>
+                    {% endfor %}
+                    {% if order.coupon %}
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div class="text-success">
+                            <h6 class="my-0" style="color:#ED8095">Promo code</h6>
+                            <small style="color:#ED8095">{{ order.coupon.code }}</small>
+                        </div>
+                        <span class="text-success">-${{ order.coupon.amount }}</span>
+                    </li>
+                    {% endif %}
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span style="color:#ED8095">Total (USD)</span>
+                        <strong style="color:black">${{ order.get_total }}</strong>
+                    </li>
+                </ul>
+
+                {% if DISPLAY_COUPON_FORM %}
+                <form class="card p-2" action="{% url 'core:add-coupon' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        {{ couponform.code }}
+                        <div class="input-group-append">
+                            <button class="btn btn-md waves-effect m-0 text-white" style="background: #ED8095;"
+                                type="submit">Redeem</button>
+                        </div>
+                    </div>
+                </form>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

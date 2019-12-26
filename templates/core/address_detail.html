@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container p-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>{{object.user}}'s Address</h2>
+            <form class="mt-5">
+                <div class="form-row">
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <label>User</label>
+                            <input type="text" id="inputSMEx" disabled value="{{object.user}}"
+                                class="form-control form-control-sm">
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="md-form mt-0">
+                    <label>Street Address</label>
+                    <input type="text" id="inputSMEx" disabled value="{{object.street_address}}"
+                        class="form-control form-control-sm">
+                </div>
+                <div class="md-form mt-0">
+                    <label>Apartment Address</label>
+                    <input type="text" id="inputSMEx" disabled value="{{object.apartment_address}}"
+                        class="form-control form-control-sm">
+                </div>
+                <div class="md-form mt-0">
+                    <label>Country</label>
+                    <input type="text" id="inputSMEx" disabled value="{{object.get_country_display}}"
+                        class="form-control form-control-sm">
+                </div>
+                <div class="md-form mt-0">
+                    <label>Zip</label>
+                    <input type="text" id="inputSMEx" disabled value="{{object.zip}}"
+                        class="form-control form-control-sm">
+                </div>
+                <div class="md-form mt-0">
+                    <label>Address Type</label>
+                    <input type="text" id="inputSMEx" disabled value="{{object.get_address_type_display}}"
+                        class="form-control form-control-sm">
+                </div>
+                <div class="md-form mt-0">
+                    <label>Default</label>
+                    <input type="text" id="inputSMEx" disabled value="{{object.default}}"
+                        class="form-control form-control-sm">
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

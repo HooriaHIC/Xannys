@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block extra_head %}
+
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row mt-5">
+
+        <div class="col-md-4">
+            <div class="card p-5" style="background-color: rgba(0,0,0,0.3);">
+                <h2 class="text-center" style="font-size: 4vh;"><a href="{% url 'core:refunds' %}">Refunds</a></h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-5" style="background-color: rgba(0,0,0,0.3);">
+                <h2 class="text-center" style="font-size: 4vh;"><a href="{% url 'core:address' %}">Adresses</a></h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-5" style="background-color: rgba(0,0,0,0.3);">
+                <h2 class="text-center" style="font-size: 4vh;"><a href="{% url 'core:coupons' %}">Coupons</a>
+                </h2>
+            </div>
+        </div>
+    </div>
+    <!--Grid row-->
+    <div class="row mt-5">
+
+        <div class="col-md-4">
+            <div class="card p-5" style="background-color: rgba(0,0,0,0.3);">
+                <h2 class="text-center" style="font-size: 4vh;"><a href="{% url 'core:all-items' %}">Items</a></h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-5" style="background-color: rgba(0,0,0,0.3);">
+                <h2 class="text-center" style="font-size: 4vh;"><a href="{% url 'core:all-orders' %}">Orders</a></h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-5" style="background-color: rgba(0,0,0,0.3);">
+                <h2 class="text-center" style="font-size: 4vh;"><a href="{% url 'core:all-payments' %}">Payments</a>
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 mb-5">
+        <div class="col-md-6 mt-5">
+            <h2>Latest Payments</h2>
+            <table class="table text-white mt-5">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in todays_pay %}
+                    <tr>
+                        <td></td>
+                        <td>{{item.user}}</td>
+                        <td>{{item.amount}}</td>
+                        <td>{{item.timestamp}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-5 mt-5">
+            <h2><a href="/coupon/new">Coupons</a></h2>
+            <table class="table text-white mt-5">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in coupons %}
+                    <tr>
+                        <td></td>
+                        <td>{{item.code}}</td>
+                        <td>{{item.amount}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}

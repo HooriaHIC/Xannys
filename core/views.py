@@ -3,16 +3,16 @@ from django.contrib import messages
 from django.core.mail import EmailMessage
 from django.template.loader import get_template
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView, View
+from django.views.generic import ListView, DetailView, View, CreateView, DeleteView, UpdateView
 from django.shortcuts import redirect, reverse
 from django.utils import timezone
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, ContactForm
-from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Cats
+from .models import *
 import requests
-
+import datetime
 import random
 import string
 import stripe
@@ -562,6 +562,10 @@ def get_coupon(request, code):
         return redirect("core:checkout")
 
 
+def check_admin(user):
+    return user.is_superuser
+
+
 class AddCouponView(View):
     def post(self, *args, **kwargs):
         form = CouponForm(self.request.POST or None)
@@ -612,3 +616,286 @@ class RequestRefundView(View):
             except ObjectDoesNotExist:
                 messages.info(self.request, "This order does not exist.")
                 return redirect("core:request-refund")
+
+
+class ItemCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = Item
+    fields = ['title', 'price', 'stock', 'discount_price', 'fabric', 'cloth_type', 'label', 'description', 'image', 'img1', 'fav', 'cat']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class ItemDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Item
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == self.request.user:
+            return True
+        return False
+
+
+class ItemUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Item
+    fields = ['title', 'price', 'stock', 'discount_price', 'fabric', 'cloth_type', 'label', 'description', 'image', 'img1', 'fav', 'cat']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == self.request.user:
+            return True
+        return False
+
+
+class ItemListView(ListView, UserPassesTestMixin):
+    model = Item
+    template_name = 'core/all-items.html'
+    context_object_name = 'items'
+
+
+@user_passes_test(check_admin)
+def dashboard(request):
+    context = {
+        'todays_pay': Payment.objects.all(),
+        'coupons': Coupon.objects.all(),
+    }
+    return render(request, 'dashboard.html', context)
+
+
+class OrderListView(ListView, UserPassesTestMixin):
+    model = Order
+    template_name = 'core/orders.html'
+    context_object_name = 'order'
+
+
+class OrderDetailView(DetailView, UserPassesTestMixin):
+    model = Order
+
+
+class OrderUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Order
+    fields = ['user', 'ref_code', 'items', 'ordered_date',
+              'ordered', 'shipping_address', 'billing_address', 'payment', 'coupon', 'being_delivered', 'received', 'refund_requested', 'refund_granted']
+    success_url = '/dashboard'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == self.request.user:
+            return True
+        return False
+
+
+class OrderCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = Order
+    fields = ['user', 'ref_code', 'items', 'ordered_date',
+              'ordered', 'shipping_address', 'billing_address', 'payment', 'coupon', 'being_delivered', 'received', 'refund_requested', 'refund_granted']
+    success_url = '/dashboard'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class OrderDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Order
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == self.request.user:
+            return True
+        return False
+
+
+class PaymentListView(ListView, UserPassesTestMixin):
+    model = Payment
+    template_name = 'core/payments.html'
+    context_object_name = 'payments'
+
+
+class PaymentDetailView(DetailView, UserPassesTestMixin):
+    model = Payment
+
+
+class PaymentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Payment
+    fields = ['user', 'stripe_charge_id', 'amount', 'timestamp']
+    success_url = '/dashboard'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == self.request.user:
+            return True
+        return False
+
+
+class PaymentCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = Payment
+    fields = ['user', 'stripe_charge_id', 'amount', 'timestamp']
+    success_url = '/dashboard'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class PaymentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Payment
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == self.request.user:
+            return True
+        return False
+
+
+class CouponUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Coupon
+    fields = ['code', 'amount']
+    success_url = '/dashboard'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == self.request.user:
+            return True
+        return False
+
+
+class CouponCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = Coupon
+    fields = ['code', 'amount']
+    success_url = '/dashboard'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class CouponDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Coupon
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == self.request.user:
+            return True
+        return False
+
+
+class CouponListView(ListView, UserPassesTestMixin):
+    model = Coupon
+    template_name = 'core/coupon.html'
+    context_object_name = 'coupon'
+
+
+class RefundListView(ListView, UserPassesTestMixin):
+    model = Refund
+    template_name = "core/refunds.html"
+    context_object_name = "refund"
+
+
+class RefundUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Refund
+    fields = ['order', 'reason', 'accepted', 'email']
+    success_url = '/dashboard'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == self.request.user:
+            return True
+        return False
+
+
+class RefundCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = Refund
+    fields = ['order', 'reason', 'accepted', 'email']
+    success_url = '/dashboard'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class RefundDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Refund
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == self.request.user:
+            return True
+        return False
+
+
+class RefundDetailView(DetailView, UserPassesTestMixin):
+    model = Refund
+
+
+class AddressListView(ListView, UserPassesTestMixin):
+    model = Address
+    template_name = "core/address.html"
+    context_object_name = "address"
+
+
+class AddressUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Address
+    fields = ['user', 'street_address', 'apartment_address', 'country', 'zip', 'address_type', 'default']
+    success_url = '/dashboard'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == self.request.user:
+            return True
+        return False
+
+
+class AddressCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = Address
+    fields = ['user', 'street_address', 'apartment_address', 'country', 'zip', 'address_type', 'default']
+    success_url = '/dashboard'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class AddressDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Address
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == self.request.user:
+            return True
+        return False
+
+
+class AddressDetailView(DetailView, UserPassesTestMixin):
+    model = Address

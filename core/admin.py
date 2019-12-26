@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import Item, OrderItem, Order, Payment, Coupon, Refund, Address, UserProfile, Cats
+from .views import ItemCreateView
 
 
 def make_refund_accepted(modeladmin, request, queryset):
@@ -53,6 +54,11 @@ class AddressAdmin(admin.ModelAdmin):
     ]
     list_filter = ['default', 'address_type', 'country']
     search_fields = ['user', 'street_address', 'apartment_address', 'zip']
+
+
+class ItemModelAdmin(admin.ModelAdmin):
+    readonly_fields = ('slug',)
+    form = ItemCreateView
 
 
 admin.site.register(OrderItem)

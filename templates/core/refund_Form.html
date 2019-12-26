@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block extra_head %}
+<style>
+    .about-h1 {
+        text-transform: uppercase;
+        letter-spacing: 6px;
+        font-size: 10vh;
+        font-weight: 900;
+        text-decoration: none;
+        color: white;
+        background-size: 120% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -moz-background-clip: text;
+        -moz-text-fill-color: transparent;
+        -ms-background-clip: text;
+        -ms-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        background-image: linear-gradient(45deg,
+                #ED8095,
+                #AD5E6D,
+                #F3B2D3,
+                #FFFFFF);
+    }
+
+    input {
+        background: transparent;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container p-5 mb-5">
+
+    <form method="POST" class="mb-5" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <h1 class="about-h1">Add or Edit Item</h1>
+            {{ form|crispy }}
+        </fieldset>
+        <div class="form-group" style="float: right;">
+            <button class="btn float-right mb-5 " style="background: #ED8095;">Post</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}
