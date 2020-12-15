@@ -34,10 +34,11 @@
   .about-h1 {
     text-transform: uppercase;
     letter-spacing: 6px;
-    height: auto;
+    min-height: 250px;
     font-size: 10vh;
     text-align: center;
     font-weight: 900;
+    padding-bottom: 5rem;
     text-decoration: none;
     color: white;
     background-size: 120% 100%;
@@ -54,7 +55,6 @@
         #AD5E6D,
         #F3B2D3,
         #FFFFFF);
-    margin-bottom: 100px;
   }
 
   .main-xanny {
@@ -68,7 +68,6 @@
   @media(max-width: 800px) {
     .about-h1 {
       font-size: 5vh;
-      margin-bottom: 150px;
     }
 
   }
@@ -92,7 +91,7 @@
 
     <div class="view">
       <img src="https://i.pinimg.com/originals/69/4f/8a/694f8a02a9533471b7abdb9b5a5c1928.jpg"
-        style="height: 80vh;clip-path: polygon(0% 0%, 0% 100%, 25% 100%, 25% 25%, 75% 25%, 75% 75%, 25% 75%, 25% 100%, 100% 100%, 100% 0%);"
+        style="height: 70vh; margin-top: 2vh !important;clip-path: polygon(0% 0%, 0% 100%, 25% 100%, 25% 25%, 75% 25%, 75% 75%, 25% 75%, 25% 100%, 100% 100%, 100% 0%);"
         class="mx-auto d-block mt-1 mb-5" />
       <div class="mask flex-center">
         <h1 class="main-xanny">XANNYS</h1>
@@ -106,7 +105,7 @@
           <!--Zoom effect-->
           <a href="{{ every.slug }}">
             <div class="view overlay px-0">
-              <img src=" {{ every.image.url }}" class="rounded mx-auto d-block" style="max-height: 70vh;" alt="zoom">
+              <img src=" {{ every.image.url }}" class="rounded mx-auto d-block" style="max-height: 80vh;" alt="zoom">
               <div style="  box-shadow: inset 0px 0px 10px rgba(0,0,0,0.9);"></div>
               <div class="mask flex-center waves-effect waves-light">
                 <a href="{{ every.slug }}">
@@ -123,7 +122,7 @@
       </div>
     </div>
 
-    <div class="container mt-5 mb-5">
+    <div class="container">
       <h1 class="about-h1"><span>❝</span>{% random_quote %}<span>❞</span></h1>
     </div>
 

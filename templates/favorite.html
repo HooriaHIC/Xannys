@@ -2,7 +2,7 @@
 
 {% block content %}
 <main>
-    <div class="container text-white mb-5">
+    <div class="container text-white" style="padding-bottom: 7rem;">
         <h1 class="mt-4 mb-4 text-center" style="color: #ED8095; font-weight: 700; letter-spacing: 3px; font-family: 'Liu Jian Mao Cao', cursive;
         font-size: 6em;">Favorites</h1>
         <hr style="border-top: 1px solid #FFFFFF;">
@@ -12,7 +12,7 @@
             <div class="card mb-3 w-100" style="background:#161a32;">
                 <div class="row no-gutters">
                     <div class="col-md-2 view overlay">
-                        <img src="{{ item.image.url }}" class="card-img-top">
+                        <img src="{{ item.image.url }}" class="card-img-top" style="height: 300px !important; object-fit: cover;">
                         <a href="{{ item.get_absolute_url }}">
                             <div class="mask rgba-white-slight" style="margin-top: -4px;">
                                 <span>
@@ -56,7 +56,11 @@
                                 {% endif %}</p>
                             <p class="lead font-weight-bold">Description</p>
 
-                            <p>{{ item.description }}</p>
+                            <p style="width:200px;
+                            text-overflow: ellipsis;
+                            display: block;
+                            white-space: nowrap;
+                            overflow: hidden;">{{ item.description }}</p>
                             <h4 class="font-weight-bold" style="color: #ED87BB;">
                                 <strong>$
                                     {% if item.discount_price %}
