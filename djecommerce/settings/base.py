@@ -7,9 +7,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 SECRET_KEY = "kobl@t=yw9d*0y%jt2gjnq78=u!z_rrxb&w8e47l!(jz@m79zy"
 
 cloudinary.config(
-    cloud_name="dgiguwrz1",
-    api_key="257659494775271",
-    api_secret="sAqckj6YhB9BVhdqtyr9iGx6hIA",
+    cloud_name="ds09jj0fe",
+    api_key="632242992925392",
+    api_secret="2ist-QoCwYtm6pVx5NVbNSjcZz8",
 )
 
 INSTALLED_APPS = [
